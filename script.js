@@ -1,7 +1,7 @@
 let canvas;
 let canvasContent;
 let snakeX = 25;
-let refreshInterval = 500;
+
 window.onload = function() {
     canvas = document.getElementById("game-canvas");
     canvasContent = canvas.getContext("2d");
@@ -13,9 +13,9 @@ window.onload = function() {
     // canvasContent.fillRect(300,300,100,100);
 
 
-    
-    //setInterval(newBox, refreshInterval-100)
-    setInterval(moveSnake, refreshInterval);
+    const framesPerSecond = 30;
+    //setInterval(newBox, 1000/framesPerSecond)
+    setInterval(moveSnake, 1000/framesPerSecond);
   
    
     
