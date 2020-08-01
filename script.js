@@ -12,7 +12,7 @@ window.onload = function() {
     drawRect(0,0,canvas.width,canvas.height,"black");
         newBox();
         moveSnake();
-        
+        colorCircle(snakeX, 200, 40, "white");
     }, 1000/framesPerSecond)   
 }
 
@@ -49,4 +49,11 @@ function newBox(){
 function drawRect(leftX,topY,width,height,color){
     canvasContent.fillStyle = color;
     canvasContent.fillRect(leftX,topY,width,height);
+}
+
+function colorCircle(centerX, centerY, radius, color){
+	canvasContent.fillStyle = color;
+	canvasContent.beginPath();
+	canvasContent.arc(centerX, centerY, radius, 0, Math.PI*2, true);
+	canvasContent.fill();
 }
