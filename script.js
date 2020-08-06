@@ -5,6 +5,7 @@ let snakeY = 20;
 let snakeXSpeed = 20;
 let snakeYSpeed = 0;
 const rectSide = 20;
+const gridSize = 20;
 let isApple = false;
  let appleX = null;
  let appleY = null;
@@ -13,13 +14,13 @@ let isApple = false;
 window.onload = function() {
     canvas = document.getElementById("game-canvas");
     canvasContext = canvas.getContext("2d");
-    const framesPerSecond = 20;
+    const framesPerSecond = 10;
     setInterval(function(){
 
     drawRect(0,0,canvas.width,canvas.height,"black");
     if (!isApple){
-        let appleX = generateAppleX();
-        let appleY = generateAppleY();
+        appleX = generateAppleX();
+        appleY = generateAppleY();
        isApple = true;
     }
     
@@ -54,14 +55,14 @@ function moveSnake(){
     document.addEventListener("keydown", function(e){
         if(e.which === 40){
             snakeXSpeed = 0;
-            snakeYSpeed = 10;
+            snakeYSpeed = gridSize;
         }
     })
     
     //move right
     document.addEventListener("keydown", function(e){
         if(e.which === 39){
-            snakeXSpeed = 10;
+            snakeXSpeed = gridSize;
             snakeYSpeed = 0;
         }
     })
@@ -70,14 +71,14 @@ function moveSnake(){
     document.addEventListener("keydown", function(e){
         if(e.which === 38){
             snakeXSpeed = 0;
-            snakeYSpeed = -10;
+            snakeYSpeed = -gridSize;
         }
     })
 
     //move left
     document.addEventListener("keydown", function(e){
         if(e.which === 37){
-            snakeXSpeed = -10;
+            snakeXSpeed = -gridSize;
             snakeYSpeed = 0;
         }
     })
