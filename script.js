@@ -7,8 +7,8 @@ let snakeYSpeed = 0;
 const rectSide = 20;
 const gridSize = 20;
 let isApple = false;
- let appleX = null;
- let appleY = null;
+let appleX = null;
+let appleY = null;
 
 
 window.onload = function() {
@@ -21,7 +21,7 @@ window.onload = function() {
     if (!isApple){
         appleX = generateAppleX();
         appleY = generateAppleY();
-       isApple = true;
+        isApple = true;
     }
     
         moveSnake();
@@ -37,14 +37,12 @@ function moveSnake(){
     if(snakeX >= canvas.width){
         snakeXSpeed = -snakeXSpeed;
     }
-     if(snakeX <= 0){
-         snakeXSpeed = -snakeXSpeed;
-     }
+    if(snakeX <= 0){
+        snakeXSpeed = -snakeXSpeed;
+    }
     let box1 = drawRect(snakeX,snakeY,rectSide, rectSide,"red");
-    
 
-
-    if (snakeX >= appleX && snakeX <= appleX + rectSide && snakeY >= appleY && snakeY <= appleY + rectSide){
+    if (snakeX === appleX && snakeY === appleY){
         canvasContext.clearRect(appleX, appleY, rectSide, rectSide);
         isApple = false;
         appleY = undefined;
@@ -89,7 +87,6 @@ function generateAppleX(){
     const appleX = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
     
     return appleX;
-   
 }
 
 function generateAppleY(){
@@ -103,7 +100,6 @@ function generateAppleY(){
 function drawApple(appleX, appleY){
     
     drawRect(appleX, appleY, rectSide, rectSide, "green");
-   
 }
 
 
