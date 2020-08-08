@@ -9,6 +9,8 @@ const gridSize = 20;
 let isApple = false;
 let appleX = null;
 let appleY = null;
+let snakeBody = [];
+let counter = 0;
 
 
 window.onload = function() {
@@ -25,6 +27,7 @@ window.onload = function() {
     }
     
         moveSnake();
+        drawSnake();
         drawApple(appleX,appleY);
     }, 1000/framesPerSecond)   
 }
@@ -40,13 +43,16 @@ function moveSnake(){
     if(snakeX <= 0){
         snakeXSpeed = -snakeXSpeed;
     }
-    let box1 = drawRect(snakeX,snakeY,rectSide, rectSide,"red");
+    //snakeBody = [drawRect(snakeX,snakeY,rectSide, rectSide,"red")];
 
+    //eat apple, increase counter/score
     if (snakeX === appleX && snakeY === appleY){
         canvasContext.clearRect(appleX, appleY, rectSide, rectSide);
         isApple = false;
         appleY = undefined;
         appleX = undefined;
+        counter++;
+        drawSnake();
     }
 
     //move down
@@ -80,6 +86,7 @@ function moveSnake(){
             snakeYSpeed = 0;
         }
     })
+    return snakeBody;
 }
 
 
@@ -94,8 +101,6 @@ function generateAppleY(){
     return appleY;
 }
 
-// let appleX = generateAppleX();
-// let appleY = generateAppleY();
 
 function drawApple(appleX, appleY){
     
@@ -114,3 +119,21 @@ function colorCircle(centerX, centerY, radius, color){
 	canvasContext.arc(centerX, centerY, radius, 0, Math.PI*2, true);
 	canvasContext.fill();
 }
+
+//add body piece to the end of the snake when called
+function drawSnake(){ 
+    let spaceBetweenRects = 2;
+    
+    for(i = 0; i <= counter; i++){
+        if(snakeXSpeed >0){
+            drawRect(snakeX-((rectSide * i) + (spaceBetweenRects * i)), snakeY, rectSide, rectSide, "red");
+        } else if(snakeXSpeed < 0){
+            drawRect(snakeX+((rectSide * i) + (spaceBetweenRects * i)), snakeY, rectSide, rectSide, "red");
+        }else if(snakeYSpeed > 0){
+             drawRect(snakeX, snakeY-((rectSide * i) + (spaceBetweenRects * i)), rectSide, rectSide, "red");
+        }else if(snakeYSpeed < 0){
+             drawRect(snakeX, snakeY+((rectSide * i) + (spaceBetweenRects * i)), rectSide, rectSide, "red");
+        }
+    }
+};
+
