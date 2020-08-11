@@ -1,9 +1,5 @@
-const DEBUG = false;
-
 let canvas;
 let canvasContent;
-let snakeX = 20;
-let snakeY = 20;
 let snakeHeadXSpeed = 20;
 let snakeHeadYSpeed = 0;
 const rectSide = 20;
@@ -12,17 +8,14 @@ let isApple = false;
 let appleX = null;
 let appleY = null;
 let snakeBody = [
-    {x: 60, y: 20, xSpeed: snakeHeadXSpeed, ySpeed: snakeHeadYSpeed},
-    {x: 40, y: 20, xSpeed: snakeHeadXSpeed, ySpeed: snakeHeadYSpeed}, 
-    {x: 20, y: 20, xSpeed: snakeHeadXSpeed, ySpeed: snakeHeadYSpeed},
+    {x: 60, y: 20,},
+    {x: 40, y: 20,}, 
+    {x: 20, y: 20,},
 ];
 let gameOver = false;
 let counter = 0;
 let direction = "right";
 let score = document.getElementById("score");
-let scoreText = document.createTextNode(counter);
-score.appendChild(scoreText);
-
 
 //main game loop
 window.onload = function() {
@@ -54,10 +47,9 @@ window.onload = function() {
 
 
 function moveSnake(){
-if(gameOver){
-    return;
-}
-
+    if(gameOver){
+        return;
+    }
     //update positon of all body pieces other than head
     for (let i = snakeBody.length -1; i > -1; i--){
         if(i !== 0){
@@ -69,88 +61,76 @@ if(gameOver){
             snakeBody[i].y += snakeHeadYSpeed;
         }
     }
-    
-    if(snakeBody[0].x > canvas.width){
-        console.log("game over");
-        gameOver = true;
-    }
-    if(snakeBody[0].x < 0){
-        console.log("game over");
-        gameOver = true;
-    }
-    if(snakeBody[0].y > canvas.height){
-        console.log("game over");
-        gameOver = true;
-    }
-    if(snakeBody[0].y < 0){
-        console.log("game Over");
-        gameOver = true;
-    }
-    
-    for (let i = 1; i <= snakeBody.length-1; i++){
-        if (snakeBody[0].x === snakeBody[i].x && snakeBody[0].y === snakeBody[i].y){
-            //alert("game over");
-            gameOver = true;
-        }
-    }
 
+    detectBoundaries();
+   
     //eat apple, increase counter/score, add piece to body
     if (snakeBody[0].x === appleX && snakeBody[0].y === appleY){
         canvasContext.clearRect(appleX, appleY, rectSide, rectSide);
         isApple = false;
-        appleY = undefined;
-        appleX = undefined;
         counter++;
-        let score = document.getElementById("score");
         score.textContent = counter; 
         createBodyPiece();
-        //drawSnake();
     }
 
     changeDirection();
 }
 
+function detectBoundaries(){
+    //right boundary
+    if(snakeBody[0].x > canvas.width){
+        gameOver = true;
+    }
+    //left boundary
+    if(snakeBody[0].x < 0){
+        gameOver = true;
+    }
+    //bottom boundary
+    if(snakeBody[0].y > canvas.height){
+        gameOver = true;
+    }
+    //top boundary
+    if(snakeBody[0].y < 0){
+        gameOver = true;
+    }
+    //touch snakeBody check
+    for (let i = 1; i <= snakeBody.length-1; i++){
+        if (snakeBody[0].x === snakeBody[i].x && snakeBody[0].y === snakeBody[i].y){
+            gameOver = true;
+        }
+    }
+};
+
 function changeDirection(){
     document.addEventListener("keydown", function(e){
         //move down
         if(e.which === 40){
-            if(direction === "up"){
-                return;
-            };
-            snakeHeadXSpeed = 0;
-            snakeHeadYSpeed = gridSize;
-            direction = "down";
+            checkAndSetDirection("up", "down", 0, gridSize);
         }
         //move right
         if(e.which === 39){
-            if(direction === "left"){
-                return;
-            };
-            snakeHeadXSpeed = gridSize;
-            snakeHeadYSpeed = 0;
-            direction = "right";
+            checkAndSetDirection("left", "right", gridSize, 0);
         }
         //move up
         if(e.which === 38){
-            if(direction === "down"){
-                return;
-            };
-            snakeHeadXSpeed = 0;
-            snakeHeadYSpeed = -gridSize;
-            direction = "up";
+            checkAndSetDirection("down", "up", 0, -gridSize);
         }
         //move left
         if(e.which === 37){
-            if(direction === "right"){
-                return;
-            };
-            snakeHeadXSpeed = -gridSize;
-            snakeHeadYSpeed = 0;
-            direction = "left";
+            checkAndSetDirection("right", "left", -gridSize, 0);
         }
     })
+};
 
-}
+//sets direction of movement and also so that snake cannot move in opposite direction
+function checkAndSetDirection(checkDirection, setDirection, horzSpeed, vertSpeed,){
+    if(direction === checkDirection){
+        return;
+    };
+    snakeHeadXSpeed = horzSpeed;
+    snakeHeadYSpeed = vertSpeed;
+    direction = setDirection;
+};
 
 function createBodyPiece(){
     //create new body part on top of last body part - will update to end of snake on new draw
@@ -160,25 +140,16 @@ function createBodyPiece(){
 
 function generateAppleX(){
     appleX = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
-    //appleX = 40;
     return appleX;
 }
 
 function generateAppleY(){
-
     appleY = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
-    //appleY = 20;
     return appleY;
 }
 
+//checks if apple coords are at snakeBody, if not draws apple
 function drawApple(appleX, appleY){
-    //  if(snakeBody.forEach(coordinate => coordinate.x = appleX) && snakeBody.forEach(coordinate => coordinate.y = appleY)){
-    //      generateAppleY();
-    //      generateAppleY();
-    //      drawApple();
-    //  }else {
-    // drawRect(appleX, appleY, rectSide, rectSide, "green");
-    // }
     for(let i = 0; i < snakeBody.length; i++){
         if (snakeBody[i].x === appleX && snakeBody[i].y === appleY){
             generateAppleX();
@@ -189,31 +160,16 @@ function drawApple(appleX, appleY){
     }
 }
 
-
 //draw rectangle helper function
 function drawRect(leftX,topY,width,height,color){
     canvasContext.fillStyle = color;
     canvasContext.fillRect(leftX,topY,width,height);
 }
 
-//add body piece to the end of the snake when called
+//takes snakeBody array and draws a piece for each array element
 function drawSnake(){ 
-    let spaceBetweenRects = 2;
-    
-    // for(i = 0; i <= counter; i++){
-    //     if(snakeHeadXSpeed >0){
-    //        drawRect(snakeBody[0].x-((rectSide * i) + (spaceBetweenRects * i)), snakeBody[0].y, rectSide, rectSide, "red");            
-    //     } else if(snakeHeadXSpeed < 0){
-    //         drawRect(snakeBody[0].x+((rectSide * i) + (spaceBetweenRects * i)), snakeBody[0].y, rectSide, rectSide, "red");
-    //     }else if(snakeHeadYSpeed > 0){
-    //          drawRect(snakeBody[0].x, snakeBody[0].y-((rectSide * i) + (spaceBetweenRects * i)), rectSide, rectSide, "red");
-    //     }else if(snakeHeadYSpeed < 0){
-    //          drawRect(snakeBody[0].x, snakeBody[0].y+((rectSide * i) + (spaceBetweenRects * i)), rectSide, rectSide, "red");
-    //     }
-    // }
     for(let segment of snakeBody) {
         drawRect(segment.x, segment.y, rectSide, rectSide, "red");
     }
-
 };
 
