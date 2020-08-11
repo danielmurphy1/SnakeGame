@@ -1,8 +1,28 @@
+body{
+    background-color: blanchedalmond;
+}
 header{
     text-align: center;
 }
 
+#canvas-container{
+    width: 70%;
+    text-align: right;
+}
+
+#info-box{
+    margin-left: 50px;
+}
+
 canvas{
-    display: block;
+    display: inline-block;
     margin: auto;
+} 
+
+#score-box{
+    display: inline-block;
+}
+
+main{
+    display: flex;
 }

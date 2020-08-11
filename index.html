@@ -11,7 +11,20 @@
         <h1>Snake Game</h1>
     </header>
     <main>
-        <canvas id="game-canvas" width="600" height="600"></canvas>
+        <div id="canvas-container">
+            <canvas id="game-canvas" width="600" height="600"></canvas>
+        </div>  
+        <div id=info-box>
+            <div id="score-box">
+                <h3>Score:</h3>
+                <p id="score"></p>
+            </div>
+            <div id="directions">
+                <h3>Directions:</h3>
+                <p>Use the Up, Left, Right, and Down arrows to move the snake<br> and eat the apples as they appear on the screen.</p>
+                <p>Game over when the snake's head runs into an edge or the snake's body.</p>
+            </div>
+        </div>
     </main>
     
     <script src="script.js"></script>

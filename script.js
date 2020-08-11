@@ -19,6 +19,10 @@ let snakeBody = [
 let gameOver = false;
 let counter = 0;
 let direction = "right";
+let score = document.getElementById("score");
+let scoreText = document.createTextNode(counter);
+score.appendChild(scoreText);
+
 
 //main game loop
 window.onload = function() {
@@ -27,7 +31,7 @@ window.onload = function() {
     const framesPerSecond = 10;
 
     setInterval(function(){
-
+         
     drawRect(0,0,canvas.width,canvas.height,"black");
     if(gameOver){
         canvasContext.fillStyle = "red";
@@ -97,45 +101,13 @@ if(gameOver){
         appleY = undefined;
         appleX = undefined;
         counter++;
+        let score = document.getElementById("score");
+        score.textContent = counter; 
         createBodyPiece();
         //drawSnake();
     }
 
     changeDirection();
-    // //move down
-    // document.addEventListener("keydown", function(e){
-    //     if(e.which === 40){
-            
-    //         snakeHeadXSpeed = 0;
-           
-    //         snakeHeadYSpeed = gridSize;
-    //     }
-    // })
-    
-    // //move right
-    // document.addEventListener("keydown", function(e){
-    //     if(e.which === 39){
-    //         snakeHeadXSpeed = gridSize;
-    //         snakeHeadYSpeed = 0;
-    //     }
-    // })
-
-    // //move up
-    // document.addEventListener("keydown", function(e){
-    //     if(e.which === 38){
-    //         snakeHeadXSpeed = 0;
-    //         snakeHeadYSpeed = -gridSize;
-    //     }
-    // })
-
-    // //move left
-    // document.addEventListener("keydown", function(e){
-    //     if(e.which === 37){
-    //         snakeHeadXSpeed = -gridSize;
-    //         snakeHeadYSpeed = 0;
-    //     }
-    // })
-    
 }
 
 function changeDirection(){
@@ -187,27 +159,35 @@ function createBodyPiece(){
 
 
 function generateAppleX(){
-     appleX = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
-    
+    appleX = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
+    //appleX = 40;
     return appleX;
 }
 
 function generateAppleY(){
 
-     appleY = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
-    
+    appleY = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
+    //appleY = 20;
     return appleY;
 }
 
 function drawApple(appleX, appleY){
-    // if(snakeBody.some(coordinate => coordinate.x = appleX) && snakeBody.some(coordinate => coordinate.y = appleY)){
-    //     generateAppleY();
-    //     generateAppleY();
-    //     drawApple();
-    // }else {
-    drawRect(appleX, appleY, rectSide, rectSide, "green");
+    //  if(snakeBody.forEach(coordinate => coordinate.x = appleX) && snakeBody.forEach(coordinate => coordinate.y = appleY)){
+    //      generateAppleY();
+    //      generateAppleY();
+    //      drawApple();
+    //  }else {
+    // drawRect(appleX, appleY, rectSide, rectSide, "green");
+    // }
+    for(let i = 0; i < snakeBody.length; i++){
+        if (snakeBody[i].x === appleX && snakeBody[i].y === appleY){
+            generateAppleX();
+            generateAppleY();
+        }else{
+            drawRect(appleX, appleY, rectSide, rectSide, "green");
+        }
     }
-//}
+}
 
 
 //draw rectangle helper function
