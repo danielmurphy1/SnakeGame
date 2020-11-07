@@ -4,8 +4,6 @@ _Web Based Snake Game using Vanilla JavaScript, HTML, and CSS_
 
 ## Instructions
 
----
-
 This application is my take on the classic Snake Game that became popular when it was included on cell-phones in the late 1990's and early 2000's before smart-phones took over. Use the keyboard arrows to move your snake, and see how many apples you can eat before running into the sides or the rest of the snake!
 
 
@@ -15,7 +13,7 @@ Access the app [here](https://danielmurphy1.github.io/SnakeGame/)
 
 ### Summary
 
-I created this app to learn how to use the HTML canvas element. I learned how to create and draw the canvas, how to draw items over the canvas. What was most challenging, though, was learning how to create 2D animation using the canvas's 2D context so that the canvas and the items drawn on it could continuously be drawn, giving the appearance of animation. This was achieved by utilizing JavaScript's built-in setInterval() function and setting a framerate so as to achieve the smoothest possible animation appearance. 
+I created this app to learn how to use the HTML canvas element. I learned how to create and draw the canvas, as well as how to draw items over the canvas. What was most challenging, though, was learning how to create 2D animation using the canvas's 2D context so that the canvas and the items drawn on it could continuously be drawn, giving the appearance of animation. This was achieved by utilizing JavaScript's built-in setInterval() function and setting a framerate so as to achieve the smoothest possible animation appearance. 
 
 In creating this game, I also increaed my debugging skills. It is one thing to debug an app that relies on user input to move through the code, but when debugging using the setInterval() function, it is even more important to watch the code to follow the logic. 
 
@@ -23,4 +21,4 @@ Lastly, the most challenging portion of creating this game was getting the snake
 
 ### Author
 
-- Dan Murphy
+- Dan Murphy, Software Developer

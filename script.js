@@ -24,7 +24,7 @@ window.onload = function() {
     const framesPerSecond = 10;
 
     setInterval(function(){
-         
+
     drawRect(0,0,canvas.width,canvas.height,"black");
     if(gameOver){
         canvasContext.fillStyle = "red";
@@ -34,8 +34,7 @@ window.onload = function() {
         return;
     }
     if (!isApple){
-        appleX = generateAppleX();
-        appleY = generateAppleY();
+        generateAppleLocation();
         isApple = true;
     }
 
@@ -44,7 +43,6 @@ window.onload = function() {
         drawApple(appleX,appleY);
     }, 1000/framesPerSecond)   
 }
-
 
 function moveSnake(){
     if(gameOver){
@@ -63,7 +61,7 @@ function moveSnake(){
     }
 
     detectBoundaries();
-   
+
     //eat apple, increase counter/score, add piece to body
     if (snakeBody[0].x === appleX && snakeBody[0].y === appleY){
         canvasContext.clearRect(appleX, appleY, rectSide, rectSide);
@@ -78,21 +76,13 @@ function moveSnake(){
 
 function detectBoundaries(){
     //right boundary
-    if(snakeBody[0].x > canvas.width){
-        gameOver = true;
-    }
+    snakeBody[0].x > canvas.width ? gameOver = true : null;
     //left boundary
-    if(snakeBody[0].x < 0){
-        gameOver = true;
-    }
+    snakeBody[0].x < 0 ? gameOver = true : null;
     //bottom boundary
-    if(snakeBody[0].y > canvas.height){
-        gameOver = true;
-    }
+    snakeBody[0].y > canvas.height ? gameOver = true : null;
     //top boundary
-    if(snakeBody[0].y < 0){
-        gameOver = true;
-    }
+    snakeBody[0].y < 0 ? gameOver = true : null;
     //touch snakeBody check
     for (let i = 1; i <= snakeBody.length-1; i++){
         if (snakeBody[0].x === snakeBody[i].x && snakeBody[0].y === snakeBody[i].y){
@@ -102,22 +92,22 @@ function detectBoundaries(){
 };
 
 function changeDirection(){
-    document.addEventListener("keydown", function(e){
-        //move down
-        if(e.which === 40){
-            checkAndSetDirection("up", "down", 0, gridSize);
-        }
-        //move right
-        if(e.which === 39){
-            checkAndSetDirection("left", "right", gridSize, 0);
-        }
-        //move up
-        if(e.which === 38){
-            checkAndSetDirection("down", "up", 0, -gridSize);
-        }
-        //move left
-        if(e.which === 37){
-            checkAndSetDirection("right", "left", -gridSize, 0);
+    document.addEventListener("keydown", e => {
+        switch(e.which){
+            case 40: //move down
+                checkAndSetDirection("up", "down", 0, gridSize);
+                break;
+            case 39: //move right
+                checkAndSetDirection("left", "right", gridSize, 0);
+                break;
+            case 38: //move up
+                checkAndSetDirection("down", "up", 0, -gridSize);
+                break;
+            case 37: //move left
+                checkAndSetDirection("right", "left", -gridSize, 0);
+                break;
+            default:
+                break;
         }
     })
 };
@@ -135,41 +125,29 @@ function checkAndSetDirection(checkDirection, setDirection, horzSpeed, vertSpeed
 function createBodyPiece(){
     //create new body part on top of last body part - will update to end of snake on new draw
     snakeBody.push({x: (snakeBody[snakeBody.length-1].x), y: snakeBody[snakeBody.length-1].y});
-}
+};
 
-
-function generateAppleX(){
+function generateAppleLocation(){
     appleX = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
-    return appleX;
-}
-
-function generateAppleY(){
     appleY = 20 * (Math.floor(Math.random()*30)); //generate random between 0 and 580
-    return appleY;
-}
+};
 
 //checks if apple coords are at snakeBody, if not draws apple
 function drawApple(appleX, appleY){
-    for(let i = 0; i < snakeBody.length; i++){
-        if (snakeBody[i].x === appleX && snakeBody[i].y === appleY){
-            generateAppleX();
-            generateAppleY();
-        }else{
-            drawRect(appleX, appleY, rectSide, rectSide, "green");
-        }
-    }
-}
+    for(let segment of snakeBody){
+        (segment.x === appleX && segment.y === appleY) ? generateAppleLocation() : drawRect(appleX, appleY, rectSide, rectSide, "green");
+    } 
+};
 
 //draw rectangle helper function
 function drawRect(leftX,topY,width,height,color){
     canvasContext.fillStyle = color;
     canvasContext.fillRect(leftX,topY,width,height);
-}
+};
 
 //takes snakeBody array and draws a piece for each array element
 function drawSnake(){ 
-    for(let segment of snakeBody) {
+    for(let segment of snakeBody){
         drawRect(segment.x, segment.y, rectSide, rectSide, "red");
     }
 };
-
