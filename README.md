@@ -2,14 +2,14 @@
 
 _Web Based Snake Game using Vanilla JavaScript, HTML, and CSS_
 
-## Instructions
-
-This application is my take on the classic Snake Game that became popular when it was included on cell-phones in the late 1990's and early 2000's before smart-phones took over. Use the keyboard arrows to move your snake to see how many apples you can eat before running into the sides or the rest of the snake's body!
-
+![SnakeGame Screen](https://github.com/danielmurphy1/SnakeGame/blob/master/SnakeGameScreenShot.JPG)
 
 Access the app [here](https://danielmurphy1.github.io/SnakeGame/)
 
-![SnakeGame Screen](https://github.com/danielmurphy1/SnakeGame/blob/master/SnakeGameScreenShot.JPG)
+
+## Instructions
+
+This application is my take on the classic Snake Game that became popular when it was included on cell-phones in the late 1990's and early 2000's before smart-phones took over. Use the keyboard arrows to move your snake to see how many apples you can eat before running into the sides or the rest of the snake's body!
 
 ### Summary
 
